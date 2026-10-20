@@ -1,0 +1,10 @@
+# Notices
+
+PTCG Scanner (site) — interface da API do TCC de Sofia Valadares.
+Copyright (c) 2026 Sofia Valadares. License: [CC BY-NC 4.0](LICENSE).
+
+This project is **not** affiliated with Nintendo, The Pokémon Company, Creatures Inc., or GAME FREAK.
+
+Demo photos in `assets/demo/` come from the thesis evaluation set and are for academic demonstration only.
+
+Official card art is loaded at runtime from [TCGdex](https://tcgdex.dev/) (`api.tcgdex.net` / `assets.tcgdex.net`) under that project's terms. This site does not rehost those images.
