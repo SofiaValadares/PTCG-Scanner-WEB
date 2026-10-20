@@ -32,6 +32,7 @@
       <p class="lead">
         Tira foto, envia uma imagem ou usa um exemplo. O recorte aparece ao lado
         da arte oficial da <a href="https://tcgdex.dev/" style="color: var(--accent)">TCGdex</a>.
+        Toque numa carta para ver as regiões de interesse e o que o OCR leu.
         O site tenta o túnel da API; se não der, usa a API neste computador.
       </p>
 
@@ -116,6 +117,25 @@
           <button class="btn ghost" type="button" id="btn-close-cam">Cancelar</button>
           <button class="btn" type="button" id="btn-shot">Capturar</button>
         </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modal-card" hidden>
+      <div class="sheet sheet-wide">
+        <h2 id="inspect-title">Carta</h2>
+        <p class="inspect-sub" id="inspect-sub"></p>
+        <div class="inspect">
+          <div class="inspect-visual">
+            <figure class="inspect-crop">
+              <img id="inspect-img" alt="recorte com ROI" />
+              <svg id="inspect-svg" viewBox="0 0 1 1" preserveAspectRatio="none" aria-hidden="true"></svg>
+              <div id="inspect-labels" class="inspect-labels"></div>
+            </figure>
+            <ul class="legend" id="inspect-legend"></ul>
+          </div>
+          <div class="inspect-ocr" id="inspect-ocr"></div>
+        </div>
+        <button class="btn ghost full" type="button" id="btn-close-card">Fechar</button>
       </div>
     </div>
 
