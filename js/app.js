@@ -198,7 +198,10 @@
           officialFig.classList.add("missing");
         });
     } else {
-      officialFig.querySelector("figcaption").textContent = "Sem match";
+      const hasNumber = /\d/.test(String(ocr.number || ""));
+      officialFig.querySelector("figcaption").textContent = hasNumber
+        ? "Sem match"
+        : "Sem número";
       officialFig.classList.add("missing");
     }
     return el;
