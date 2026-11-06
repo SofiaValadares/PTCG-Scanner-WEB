@@ -3,87 +3,110 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#10151c" />
+    <meta name="theme-color" content="#0b0e13" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>PTCG Scanner</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css?v=8" />
   </head>
   <body>
     <header class="top">
       <div class="wrap top-inner">
         <div class="brand">
-          <strong>PTCG Scanner</strong>
-          <span>Foto → cartas → catálogo</span>
+          <span class="mark" aria-hidden="true"></span>
+          <span class="brand-copy">
+            <strong>PTCG Scanner</strong>
+            <span>Foto, leitura e catálogo</span>
+          </span>
         </div>
-        <div class="status" id="status">
-          <i class="dot" id="status-dot"></i>
-          <span id="status-text">Conectando…</span>
+        <div class="top-actions">
+          <div class="status" id="status">
+            <i class="dot" id="status-dot"></i>
+            <span id="status-text">Conectando…</span>
+          </div>
+          <button class="icon-btn" type="button" id="btn-settings" aria-label="Configuração">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/><path d="M19.4 13.5a7.7 7.7 0 0 0 .1-3l2-1.2-2-3.4-2.3.6a8 8 0 0 0-2.6-1.5L14.2 2h-4.4l-.4 2.9a8 8 0 0 0-2.6 1.5l-2.3-.6-2 3.4L4.5 10.5a7.7 7.7 0 0 0 .1 3l-2 1.2 2 3.4 2.3-.6a8 8 0 0 0 2.6 1.5l.4 3h4.4l.4-2.9a8 8 0 0 0 2.6-1.5l2.3.6 2-3.4-2-1.2Z"/></svg>
+            Configurar
+          </button>
         </div>
       </div>
     </header>
 
-    <main class="wrap">
-      <div class="banner" id="banner">
-        <div id="banner-text"></div>
-        <button class="btn ghost" type="button" id="btn-settings-banner">Configurar API</button>
-      </div>
+    <div class="toast" id="banner" role="status">
+      <p id="banner-text"></p>
+    </div>
 
-      <h1>Identifique cartas numa foto</h1>
+    <main class="wrap" id="page-home">
+      <p class="eyebrow">Leitura automática de cartas</p>
+      <h1>Identifique cada carta numa foto</h1>
       <p class="lead">
-        Tira foto, envia uma imagem ou usa um exemplo. O recorte aparece ao lado
-        da arte oficial da <a href="https://tcgdex.dev/" style="color: var(--accent)">TCGdex</a>.
-        Toque numa carta para ver as regiões de interesse e o que o OCR leu.
-        O site tenta o túnel da API; se não der, usa a API neste computador.
+        Tire uma foto, envie imagens ou abra a pasta de teste. O recorte fica ao lado
+        da arte oficial da <a href="https://tcgdex.dev/">TCGdex</a>.
+        Toque numa carta para ver as regiões lidas e o texto do OCR.
       </p>
 
       <div class="grid-actions">
         <button class="card-btn" type="button" id="btn-camera">
-          <b>Tirar foto</b>
-          <span>Câmera traseira no celular</span>
+          <span class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 7h1.2l1-1.6h3.6L15 7H16a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-7a3 3 0 0 1 3-3Z"/><circle cx="12" cy="13" r="3.2"/></svg>
+          </span>
+          <span class="card-copy">
+            <b>Tirar foto</b>
+            <span>Câmera deste aparelho</span>
+          </span>
         </button>
         <button class="card-btn" type="button" id="btn-upload">
-          <b>Enviar foto</b>
-          <span>Uma ou várias imagens</span>
+          <span class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 16V6"/><path d="m8 9 4-4 4 4"/><path d="M5 16.5V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5"/></svg>
+          </span>
+          <span class="card-copy">
+            <b>Enviar foto</b>
+            <span>Uma ou várias imagens</span>
+          </span>
         </button>
-        <button class="card-btn" type="button" id="btn-settings">
-          <b>API / túnel</b>
-          <span>URL do cloudflared ou local</span>
+        <button class="card-btn" type="button" id="btn-folder">
+          <span class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3.5 8.5V18a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-6l-1.6-1.8H5.5a2 2 0 0 0-2 2Z"/></svg>
+          </span>
+          <span class="card-copy">
+            <b>Pasta de teste</b>
+            <span>50 fotos variadas</span>
+          </span>
         </button>
       </div>
+      <p class="lead" style="margin-top: 1.4rem">
+        <a href="revisar.html">Revisar anotações</a> de outra pasta.
+      </p>
+    </main>
 
-      <section class="section" id="demos">
-        <h2>Demonstração</h2>
-        <div class="demos">
-          <button class="demo" type="button" data-demo="assets/demo/binder-varios.jpg">
-            <img src="assets/demo/binder-varios.jpg" alt="Várias cartas num binder" />
-            <p>Binder com várias cartas</p>
-          </button>
-          <button class="demo" type="button" data-demo="assets/demo/mesa-cartas.jpg">
-            <img src="assets/demo/mesa-cartas.jpg" alt="Cartas sobre a mesa" />
-            <p>Cartas na mesa</p>
-          </button>
-          <button class="demo" type="button" data-demo="assets/demo/pagina-set.jpg">
-            <img src="assets/demo/pagina-set.jpg" alt="Página de set" />
-            <p>Página de um set</p>
-          </button>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>Resultado</h2>
-        <div class="busy" id="busy">
-          <div class="spin"></div>
-          <span>Lendo cartas… pode levar alguns segundos.</span>
-        </div>
-        <p class="empty" id="empty">Nada ainda. Envie uma foto ou toque numa demonstração.</p>
-        <div class="results" id="results"></div>
-      </section>
+    <main class="wrap" id="page-result" hidden>
+      <div class="result-bar">
+        <button class="btn ghost" type="button" id="btn-back">Voltar</button>
+        <h1>Resultado</h1>
+      </div>
+      <div class="busy" id="busy">
+        <div class="spin"></div>
+        <span id="busy-text">Lendo cartas… pode levar alguns segundos.</span>
+      </div>
+      <p class="empty" id="empty">Nada ainda.</p>
+      <div class="results" id="results"></div>
     </main>
 
     <nav class="dock" aria-label="Ações">
-      <button type="button" id="dock-camera">Foto</button>
-      <button type="button" id="dock-upload">Enviar</button>
-      <button type="button" id="dock-demo">Demos</button>
+      <button type="button" id="dock-camera">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h1.2l1-1.6h3.6L15 7H16a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-7a3 3 0 0 1 3-3Z"/><circle cx="12" cy="13" r="3.2"/></svg>
+        Foto
+      </button>
+      <button type="button" id="dock-upload">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V6"/><path d="m8 9 4-4 4 4"/><path d="M5 16.5V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5"/></svg>
+        Enviar
+      </button>
+      <button type="button" id="dock-folder">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.5V18a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2V9.5a2 2 0 0 0-2-2h-6l-1.6-1.8H5.5a2 2 0 0 0-2 2Z"/></svg>
+        Pasta
+      </button>
     </nav>
 
     <input class="hidden" id="input-camera" type="file" accept="image/*" capture="environment" />
@@ -91,10 +114,12 @@
 
     <div class="modal" id="modal-settings" hidden>
       <div class="sheet">
-        <h2>Conexão da API</h2>
+        <h2>Conexão</h2>
+        <p class="notice" id="settings-notice" hidden></p>
         <p class="lead" style="margin-bottom: 0.4rem">
-          Ao abrir o site, o túnel é tentado primeiro. Se falhar, usa
-          <code>127.0.0.1</code> neste PC.
+          Nesta demonstração o modelo já vem com a página. Abra
+          <code>http://127.0.0.1:5500</code> e o status fica Pronto.
+          Os campos abaixo só entram se a página for aberta em outro endereço.
         </p>
         <label for="field-tunnel">URL do túnel (HTTPS do cloudflared)</label>
         <input id="field-tunnel" type="url" placeholder="https://algo.trycloudflare.com" />
@@ -120,6 +145,18 @@
       </div>
     </div>
 
+    <div class="modal" id="modal-folder" hidden>
+      <div class="sheet sheet-wide">
+        <h2>Pasta de teste</h2>
+        <p class="lead" style="margin-bottom: 0.8rem">
+          Toque numa foto ou teste a pasta inteira. O resultado compara com o gabarito.
+        </p>
+        <button class="btn full" type="button" id="btn-test-all">Testar todas</button>
+        <div class="folder-grid" id="folder-grid"></div>
+        <button class="btn ghost full" type="button" id="btn-close-folder">Fechar</button>
+      </div>
+    </div>
+
     <div class="modal" id="modal-card" hidden>
       <div class="sheet sheet-wide">
         <h2 id="inspect-title">Carta</h2>
@@ -140,8 +177,8 @@
     </div>
 
     <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/tcgdex.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/api.js?v=12"></script>
+    <script src="js/tcgdex.js?v=2"></script>
+    <script src="js/app.js?v=16"></script>
   </body>
 </html>

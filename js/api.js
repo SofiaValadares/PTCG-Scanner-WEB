@@ -38,11 +38,11 @@
   }
 
   async function probe(base, timeoutMs) {
-    if (!base) throw new Error("URL vazio");
+    const root = trimSlash(base);
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), timeoutMs);
     try {
-      const res = await fetch(`${base}/health`, {
+      const res = await fetch(`${root}/health`, {
         method: "GET",
         headers: headers(),
         signal: ctrl.signal,
@@ -59,6 +59,12 @@
   async function connect() {
     const c = cfg();
     const errors = [];
+    try {
+      const health = await probe("", Math.min(c.healthTimeoutMs, 2500));
+      return { mode: "same", base: "", health };
+    } catch (err) {
+      errors.push(`página: ${err.name === "AbortError" ? "tempo esgotado" : err.message}`);
+    }
     if (c.tunnelUrl) {
       try {
         const health = await probe(c.tunnelUrl, c.healthTimeoutMs);
@@ -83,22 +89,6 @@
       error.details = errors;
       throw error;
     }
-  }
-
-  async function fileToJpeg(file, maxSide = 1600, quality = 0.82) {
-    const bmp = await createImageBitmap(file);
-    const scale = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
-    const w = Math.max(1, Math.round(bmp.width * scale));
-    const h = Math.max(1, Math.round(bmp.height * scale));
-    const canvas = document.createElement("canvas");
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(bmp, 0, 0, w, h);
-    bmp.close();
-    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
-    const name = (file.name || "foto.jpg").replace(/\.[^.]+$/, "") + ".jpg";
-    return new File([blob], name, { type: "image/jpeg" });
   }
 
   async function scan(base, files, { includeCrops = true } = {}) {
@@ -128,5 +118,5 @@
     return res.json();
   }
 
-  global.PTCG = { cfg, savePrefs, loadPrefs, connect, probe, scan, fileToJpeg, trimSlash };
+  global.PTCG = { cfg, savePrefs, loadPrefs, connect, probe, scan, trimSlash };
 })(window);

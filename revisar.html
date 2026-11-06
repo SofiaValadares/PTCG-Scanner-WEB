@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Revisar anotações · PTCG Scanner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/styles.css?v=7" />
+    <link rel="stylesheet" href="css/review.css?v=1" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap top-inner">
+        <a class="brand" href="index.html">
+          <span class="mark" aria-hidden="true"></span>
+          <span class="brand-copy">
+            <strong>Revisar anotações</strong>
+            <span id="progress">Nenhuma pasta aberta</span>
+          </span>
+        </a>
+        <div class="top-actions">
+          <button class="btn" type="button" id="btn-open">Abrir pasta</button>
+          <button class="btn ghost" type="button" id="btn-export">Baixar revisão</button>
+          <button class="btn ghost" type="button" id="btn-prompt">Copiar prompt</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap review">
+      <section class="stage-wrap" id="stage-wrap">
+        <p class="empty" id="empty">
+          Abra a pasta que tem as fotos, os <code>.txt</code> e o <code>data.yaml</code>.
+          As caixas aparecem em cima da imagem. Clique numa carta para marcar a anotação errada.
+        </p>
+        <div class="stage" id="stage" hidden>
+          <img id="shot" alt="" />
+          <svg id="overlay" viewBox="0 0 1 1" preserveAspectRatio="none"></svg>
+        </div>
+      </section>
+
+      <aside class="review-side">
+        <p class="origin" id="file-name"></p>
+        <div class="row">
+          <button class="btn ghost" type="button" id="btn-prev">Anterior</button>
+          <button class="btn ghost" type="button" id="btn-next">Próxima</button>
+        </div>
+        <div class="row">
+          <button class="btn" type="button" id="btn-ok">Anotação certa</button>
+          <button class="btn ghost" type="button" id="btn-bad">Anotação errada</button>
+        </div>
+        <label for="note">O que está errado</label>
+        <textarea id="note" rows="3" placeholder="Caixa na carta vizinha, número trocado, carta faltando…"></textarea>
+        <h2>Cartas desta foto</h2>
+        <ul class="box-list" id="box-list"></ul>
+        <h2>Marcadas erradas</h2>
+        <ul class="box-list" id="wrong-list"></ul>
+        <p class="lead">Setas trocam a foto. C marca certa, E marca errada.</p>
+      </aside>
+    </main>
+
+    <textarea class="prompt-src" id="prompt" readonly>
+Você está na pasta de anotações do PTCG Scanner. Não altere arquivos até eu confirmar.
+
+Formato YOLO OBB. Cada imagem tem um .txt com o mesmo nome. Cada linha é:
+class_id x1 y1 x2 y2 x3 y3 x4 y4
+Os oito números são os quatro cantos da carta, normalizados entre 0 e 1.
+O nome da classe está no data.yaml, no formato COLETOR-TOTAL-SET, por exemplo 232-91-PAF ou SM206-248-smp. Isso é o número impresso e a coleção, não o nome do Pokémon.
+
+Para cada imagem, confira olhando a foto:
+- cada caixa cobre uma carta inteira, sem cortar a carta e sem incluir a vizinha
+- não falta caixa em carta visível
+- não há caixa sobrando
+- a classe bate com o número e a coleção impressos naquela carta
+
+Não use o acerto do catálogo nem do OCR como gabarito. O gabarito é o que está impresso na imagem.
+
+Responda só com a lista do que está errado:
+arquivo da imagem, índice da linha no txt, classe atual, o erro (caixa, carta faltando, carta sobrando ou classe) e a correção. Se a imagem estiver certa, não a liste.
+</textarea>
+    <input class="hidden" id="pick" type="file" webkitdirectory multiple />
+
+    <script src="js/review.js?v=1"></script>
+  </body>
+</html>

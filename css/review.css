@@ -1,0 +1,95 @@
+a.brand {
+  color: inherit;
+  text-decoration: none;
+}
+
+.review {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0 2rem;
+}
+
+@media (min-width: 960px) {
+  .review {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+}
+
+.stage-wrap {
+  min-height: 50vh;
+}
+
+.stage {
+  position: relative;
+  background: #090c11;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.stage img {
+  width: 100%;
+  height: auto;
+}
+
+.stage svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stage polygon {
+  cursor: pointer;
+}
+
+.review-side h2 {
+  margin: 1rem 0 0.4rem;
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 560;
+}
+
+.review-side textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  padding: 0.7rem 0.8rem;
+  resize: vertical;
+}
+
+.box-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 28vh;
+  overflow: auto;
+}
+
+.box-list li,
+.box-list button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  padding: 0.4rem 0;
+  cursor: pointer;
+  font-size: 0.84rem;
+}
+
+.box-list .bad,
+.box-list button.bad {
+  color: #ffb4b4;
+}
+
+.prompt-src {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+}

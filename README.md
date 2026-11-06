@@ -1,20 +1,19 @@
 # PTCG Scanner — site
 
-Interface web (PC e celular) da [API PTCG Scanner](../API-PTCG%20Scanner). Tira foto, envia imagem ou usa exemplos. Ao abrir, **tenta o túnel**; se falhar, avisa e usa a API local.
+Interface web da leitura de cartas. Na demonstração local a página e o modelo sobem juntos: detector `obb-v6`, ROI `ocr-roi-v3` e o catálogo.
 
 Licença: [CC BY-NC 4.0](LICENSE).
 
 ## Rodar
 
-1. API no ar: na pasta `API-PTCG Scanner`, `.\scripts\run_local.ps1`
-2. Site:
+Um processo só, neste PC:
 
 ```powershell
 cd "C:\Users\Pichau\Documents\Repositorios\Web-PTCG-Scanner"
-python -m http.server 5500
+.\scripts\run_local.ps1
 ```
 
-Abra [http://127.0.0.1:5500](http://127.0.0.1:5500).
+Abra [http://127.0.0.1:5500](http://127.0.0.1:5500). A primeira vez espera o detector, o OCR e o catálogo. O status fica **Pronto**. Não é preciso subir a API em outra porta.
 
 ## Túnel
 
